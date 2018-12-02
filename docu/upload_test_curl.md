@@ -21,3 +21,23 @@
 - url = AwsClientUploaderEx.signed_download_url("logo.jpg")
 
 - copy the url and paste it into a new browser tab - (ensure you haven't logged onto the AWS console) and IF the url is correctly signed then you have just pulled down the file with the correctly signed url
+
+
+## How to configure the AWS S3 bucket for Cross Origin Resource sharing
+
+>Here is a sample CORS configuration for a web app that uses this bucket and the URL configuration - used in DEV mode..
+
+```XML
+<?xml version="1.0" encoding="UTF-8"?>
+<CORSConfiguration xmlns="http://s3.amazonaws.com/doc/2006-03-01/">
+<CORSRule>
+    <AllowedOrigin>*</AllowedOrigin>
+    <AllowedOrigin>foo.lvh.me:4000</AllowedOrigin>
+    <AllowedMethod>POST</AllowedMethod>
+    <AllowedMethod>PUT</AllowedMethod>
+    <AllowedMethod>GET</AllowedMethod>
+    <MaxAgeSeconds>3000</MaxAgeSeconds>
+    <AllowedHeader>*</AllowedHeader>
+</CORSRule>
+</CORSConfiguration>
+```
