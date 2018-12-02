@@ -1,18 +1,10 @@
 defmodule AwsClientUploaderEx do
   @moduledoc """
-  Documentation for AwsClientUploaderEx.
+    Documentation for AwsClientUploaderEx.
   """
 
-  @doc """
-  Hello world.
+  alias AwsClientUploaderEx.S3Client
 
-  ## Examples
-
-      iex> AwsClientUploaderEx.hello()
-      :world
-
-  """
-  def hello do
-    :world
-  end
+  defdelegate signed_download_url(filename), to: S3Client, as: :signed_download_url
+  defdelegate signed_upload_url(filename), to: S3Client, as: :signed_upload_url
 end

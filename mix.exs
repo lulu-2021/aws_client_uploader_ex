@@ -22,7 +22,9 @@ defmodule AwsClientUploaderEx.MixProject do
   defp deps do
     [
       {:ex_aws, "~> 2.0"},
-      {:ex_aws_s3, "~> 2.0"}
+      {:ex_aws_s3, "~> 2.0"},
+      {:aws_auth, "~> 0.7.1"},
+      {:confex, "~> 3.3.1"}
     ]
   end
 end
