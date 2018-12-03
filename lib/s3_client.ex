@@ -10,15 +10,25 @@ defmodule AwsClientUploaderEx.S3Client do
 
   def signed_upload_url(filename), do: build_presigned_upload_url(filename)
 
+  @doc """
+    if our response does not include a body...
+
+    TODO: we need to determine the status of the response!
+  """
   def list_objects(bucket) do
     response = bucket
     |> S3.list_objects()
     |> ExAws.request!(config_opts())
 
-    %{body: %{contents: objects}} = response
-
-    keys = objects
-    |> Enum.map(&(&1.key))
+    case response do
+      %{body: %{contents: objects}, status_code: 200} ->
+        objects
+        |> Enum.map(&(&1.key))
+      {:error, {:http_error, error_code, "redirected"}} ->
+        ["files not listed due to: #{error_code}"]
+      _ ->
+        ["files not listed due to: generic aws error"]
+    end
   end
 
   defp config_opts do
