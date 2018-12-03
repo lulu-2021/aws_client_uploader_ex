@@ -10,6 +10,27 @@ defmodule AwsClientUploaderEx.S3Client do
 
   def signed_upload_url(filename), do: build_presigned_upload_url(filename)
 
+  def list_objects(bucket) do
+    response = bucket
+    |> S3.list_objects()
+    |> ExAws.request!(config_opts())
+
+    %{body: %{contents: objects}} = response
+
+    keys = objects
+    |> Enum.map(&(&1.key))
+  end
+
+  defp config_opts do
+    [
+      scheme: scheme(),
+      host: host(),
+      region: region(),
+      access_key_id: aws_access_key_id(),
+      secret_access_key: aws_secret_key()
+    ]
+  end
+
   defp build_presigned_upload_url(s3_key) do
     signed_url = AWSAuth.sign_url(
       aws_access_key_id(),
