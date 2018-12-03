@@ -15,10 +15,12 @@ defmodule AwsClientUploaderEx.S3Client do
 
     TODO: we need to determine the status of the response!
   """
-  def list_objects(bucket) do
+  def list_objects(bucket, opts \\ []) do
+    options = opts || config_opts()
+
     response = bucket
     |> S3.list_objects()
-    |> ExAws.request!(config_opts())
+    |> ExAws.request!(options)
 
     case response do
       %{body: %{contents: objects}, status_code: 200} ->
