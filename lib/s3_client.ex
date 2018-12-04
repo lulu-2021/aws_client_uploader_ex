@@ -53,7 +53,7 @@ defmodule AwsClientUploaderEx.S3Client do
       aws_access_key_id(),
       aws_secret_key(),
       "PUT",
-      "#{bucket_url()}/#{bucket_divider}/#{s3_key}", region(), "s3"
+      "#{bucket_url()}/#{s3_key}", region(), "s3"
     )
     log_url(signed_url, "upload")
     signed_url
