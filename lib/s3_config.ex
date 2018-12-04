@@ -13,7 +13,7 @@ defmodule AwsClientUploaderEx.S3Config do
     }
   end
 
-  def bucket_url, do: "https://#{host()}/#{bucket()}"
+  def bucket_url, do: "https://#{host()}/#{bucket()}/#{bucket_divider}"
 
   def region do
     {:ok, aws_region} = Confex.fetch_env(:aws_client_uploader_ex, :aws_region)
@@ -34,6 +34,12 @@ defmodule AwsClientUploaderEx.S3Config do
     {:ok, aws_bucket} = Confex.fetch_env(:aws_client_uploader_ex, :aws_bucket)
     aws_bucket
   end
+
+  def bucket_divider do
+    {:ok, aws_bucket_divider} = Confex.fetch_env(:aws_client_uploader_ex, :aws_bucket_divider)
+    aws_bucket_divider
+  end
+
 
   def aws_access_key_id do
     {:ok, access_key} = Confex.fetch_env(:aws_client_uploader_ex, :aws_access_key_id)

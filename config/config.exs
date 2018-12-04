@@ -6,6 +6,7 @@ config :aws_client_uploader_ex,
   aws_access_key_id: {:system, :string, "AWS_CLIENT_CLIENT_UPLOADER_AWS_ACCESS_KEY_ID"},
   aws_secret_access_key: {:system, :string, "AWS_CLIENT_CLIENT_UPLOADER_AWS_SECRET_ACCESS_KEY"},
   aws_bucket: {:system, :string, "AWS_CLIENT_CLIENT_UPLOADER_AWS_BUCKET"},
+  aws_bucket_divider: {:system, :string, "AWS_CLIENT_CLIENT_UPLOADER_AWS_BUCKET_DIVIDER"},
   aws_region: {:system, :string, "AWS_CLIENT_CLIENT_UPLOADER_AWS_REGION"},
   aws_host: {:system, :string, "AWS_CLIENT_CLIENT_UPLOADER_AWS_HOST"},
   aws_scheme: {:system, :string, "AWS_CLIENT_CLIENT_UPLOADER_AWS_SCHEME"}

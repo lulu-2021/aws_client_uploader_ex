@@ -26,6 +26,11 @@ defmodule AwsClientUploaderEx.S3Client do
       %{body: %{contents: objects}, status_code: 200} ->
         objects
         |> Enum.map(&(&1.key))
+        |> Enum.map(&(
+          String.split(&1, "/")
+          |> List.last()
+        ))
+
       {:error, {:http_error, error_code, "redirected"}} ->
         ["files not listed due to: #{error_code}"]
       _ ->
@@ -48,7 +53,7 @@ defmodule AwsClientUploaderEx.S3Client do
       aws_access_key_id(),
       aws_secret_key(),
       "PUT",
-      "#{bucket_url()}/uploads/#{s3_key}", region(), "s3"
+      "#{bucket_url()}/#{bucket_divider}/#{s3_key}", region(), "s3"
     )
     log_url(signed_url, "upload")
     signed_url
@@ -56,7 +61,7 @@ defmodule AwsClientUploaderEx.S3Client do
 
   defp build_presigned_download_url(filename) do
     if filename do
-      s3_key = "/uploads/#{filename}" # we are using the additional `uploads` folder here
+      s3_key = "/#{bucket_divider}/#{filename}" # we are using the additional `uploads` folder here
       {:ok, signed_url} = S3.presigned_url(aws_config(), :get, bucket(), s3_key)
       log_url(signed_url, "download")
       signed_url
