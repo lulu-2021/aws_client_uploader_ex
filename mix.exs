@@ -23,7 +23,7 @@ defmodule AwsClientUploaderEx.MixProject do
     [
       {:ex_aws, "~> 2.1"},
       {:ex_aws_s3, "~> 2.0.1"},
-      {:aws_auth, "~> 0.7.1"},
+      {:aws_auth, "~> 0.7.2"},
       {:poison, "~> 3.0"},
       {:hackney, "~> 1.9"},
       {:sweet_xml, "~> 0.6.5"},
