@@ -6,7 +6,8 @@ defmodule AwsClientUploaderEx.S3Client do
   import AwsClientUploaderEx.S3Config
   require Logger
 
-  def signed_download_url(filename), do: build_presigned_download_url(filename)
+  def signed_download_url(filename, options \\ []),
+    do: build_presigned_download_url(filename, options)
 
   def signed_upload_url(filename), do: build_presigned_upload_url(filename)
 
@@ -18,21 +19,23 @@ defmodule AwsClientUploaderEx.S3Client do
   def list_objects(bucket, opts \\ []) do
     options = opts || config_opts()
 
-    response = bucket
-    |> S3.list_objects()
-    |> ExAws.request!(options)
+    response =
+      bucket
+      |> S3.list_objects()
+      |> ExAws.request!(options)
 
     case response do
       %{body: %{contents: objects}, status_code: 200} ->
         objects
-        |> Enum.map(&(&1.key))
-        |> Enum.map(&(
-          String.split(&1, "/")
-          |> List.last()
-        ))
+        |> Enum.map(& &1.key)
+        |> Enum.map(
+          &(String.split(&1, "/")
+            |> List.last())
+        )
 
       {:error, {:http_error, error_code, "redirected"}} ->
         ["files not listed due to: #{error_code}"]
+
       _ ->
         ["files not listed due to: generic aws error"]
     end
@@ -49,20 +52,25 @@ defmodule AwsClientUploaderEx.S3Client do
   end
 
   defp build_presigned_upload_url(s3_key) do
-    signed_url = AWSAuth.sign_url(
-      aws_access_key_id(),
-      aws_secret_key(),
-      "PUT",
-      "#{bucket_url()}/#{s3_key}", region(), "s3"
-    )
+    signed_url =
+      AWSAuth.sign_url(
+        aws_access_key_id(),
+        aws_secret_key(),
+        "PUT",
+        "#{bucket_url()}/#{s3_key}",
+        region(),
+        "s3"
+      )
+
     log_url(signed_url, "upload")
     signed_url
   end
 
-  defp build_presigned_download_url(filename) do
+  defp build_presigned_download_url(filename, options) do
     if filename do
-      s3_key = "/#{bucket_divider}/#{filename}" # we are using the additional `uploads` folder here
-      {:ok, signed_url} = S3.presigned_url(aws_config(), :get, bucket(), s3_key)
+      # we are using the additional `uploads` folder here
+      s3_key = "/#{bucket_divider}/#{filename}"
+      {:ok, signed_url} = S3.presigned_url(aws_config(), :get, bucket(), s3_key, options)
       log_url(signed_url, "download")
       signed_url
     else
@@ -71,8 +79,8 @@ defmodule AwsClientUploaderEx.S3Client do
   end
 
   defp log_url(url, type) do
-    Logger.debug "\n\n-------Signed #{type} url:"
-    Logger.debug url
-    Logger.debug "----------\n\n"
+    Logger.debug("\n\n-------Signed #{type} url:")
+    Logger.debug(url)
+    Logger.debug("----------\n\n")
   end
 end
