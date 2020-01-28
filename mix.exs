@@ -25,7 +25,8 @@ defmodule AwsClientUploaderEx.MixProject do
       {:ex_aws_s3, "~> 2.0.1"},
       {:aws_auth, "~> 0.7.2"},
       {:poison, "~> 3.0"},
-      {:hackney, "~> 1.9"},
+      #{:hackney, "~> 1.9"},
+      {:hackney, github: "benoitc/hackney", override: true},
       {:sweet_xml, "~> 0.6.5"},
       {:confex, "~> 3.3.1"}
     ]
