@@ -69,7 +69,7 @@ defmodule AwsClientUploaderEx.S3Client do
   defp build_presigned_download_url(filename, options) do
     if filename do
       # we are using the additional `uploads` folder here
-      s3_key = "/#{bucket_divider}/#{filename}"
+      s3_key = "/#{bucket_divider()}/#{filename}"
       {:ok, signed_url} = S3.presigned_url(aws_config(), :get, bucket(), s3_key, options)
       log_url(signed_url, "download")
       signed_url
