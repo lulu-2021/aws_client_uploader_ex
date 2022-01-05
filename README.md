@@ -10,7 +10,7 @@ by adding `aws_client_uploader_ex` to your list of dependencies in `mix.exs`:
 ```elixir
 def deps do
   [
-    {:aws_client_uploader_ex, "~> 0.1.2"}
+    {:aws_client_uploader_ex, "~> 0.1.7"}
   ]
 end
 ```
