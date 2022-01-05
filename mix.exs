@@ -7,6 +7,8 @@ defmodule AwsClientUploaderEx.MixProject do
       version: "0.1.7",
       elixir: "~> 1.12",
       start_permanent: Mix.env() == :prod,
+      description: description(),
+      package: package(),
       deps: deps()
     ]
   end
@@ -27,7 +29,24 @@ defmodule AwsClientUploaderEx.MixProject do
       {:poison, "~> 3.0"},
       {:hackney, "~> 1.18.0"},
       {:sweet_xml, "~> 0.6.5"},
-      {:confex, "~> 3.3.1"}
+      {:confex, "~> 3.3.1"},
+      {:ex_doc, ">= 0.0.0", only: :dev, runtime: false}
     ]
   end
+
+  defp description do
+    """
+	a small library wrapping aws functions
+    """
+  end
+
+  defp package do
+    [
+      files: ["lib", "mix.exs", "README*", "LICENSE*"],
+      maintainers: ["Netflakes"],
+      licenses: ["Apache License 2.0"],
+      links: %{"GitHub" => "https://github.com/netflakes/aws_client_uploader"}
+    ]
+  end
+
 end
