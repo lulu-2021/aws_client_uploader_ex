@@ -25,7 +25,7 @@ defmodule AwsClientUploaderEx.MixProject do
     [
       {:ex_aws, "~> 2.1"},
       {:ex_aws_s3, "~> 2.0.1"},
-      {:aws_auth, git: "https://github.com/lulu-2021/aws_auth.git", tag: "0.7.3"},
+      {:aws_auth, git: "https://github.com/lulu-2021/aws_auth.git"},
       {:poison, "~> 3.0"},
       {:hackney, "~> 1.18.0"},
       {:sweet_xml, "~> 0.7.2"},
