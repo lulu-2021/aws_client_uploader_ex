@@ -4,7 +4,7 @@ defmodule AwsClientUploaderEx.MixProject do
   def project do
     [
       app: :aws_client_uploader_ex,
-      version: "0.2.0",
+      version: "0.2.1",
       elixir: "~> 1.18.4",
       start_permanent: Mix.env() == :prod,
       description: description(),
@@ -26,7 +26,7 @@ defmodule AwsClientUploaderEx.MixProject do
       {:ex_aws, "~> 2.6.0"},
       {:ex_aws_s3, "~> 2.5.8"},
       {:aws_auth, git: "https://github.com/lulu-2021/aws_auth.git"},
-      {:poison, "~> 6.0"},
+      {:poison, "~> 5.0.0"},
       {:hackney, "~> 1.25.0"},
       {:sweet_xml, "~> 0.7.5"},
       {:confex, "~> 3.5.1"},
