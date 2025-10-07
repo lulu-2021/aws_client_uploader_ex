@@ -13,7 +13,7 @@ defmodule AwsClientUploaderEx.S3Config do
     }
   end
 
-  def bucket_url, do: "https://#{host()}/#{bucket()}/#{bucket_divider}"
+  def bucket_url, do: "https://#{host()}/#{bucket()}/#{bucket_divider()}"
 
   def region do
     {:ok, aws_region} = Confex.fetch_env(:aws_client_uploader_ex, :aws_region)
